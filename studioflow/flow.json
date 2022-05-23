@@ -1,0 +1,146 @@
+{
+    "description": "A New Flow",
+    "states": [
+      {
+        "name": "Trigger",
+        "type": "trigger",
+        "transitions": [
+          {
+            "event": "incomingMessage"
+          },
+          {
+            "next": "check-open",
+            "event": "incomingCall"
+          },
+          {
+            "event": "incomingRequest"
+          },
+          {
+            "event": "incomingParent"
+          }
+        ],
+        "properties": {
+          "offset": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      },
+      {
+        "name": "check-open",
+        "type": "run-function",
+        "transitions": [
+          {
+            "next": "split-open",
+            "event": "success"
+          },
+          {
+            "event": "fail"
+          }
+        ],
+        "properties": {
+          "service_sid": "",
+          "environment_sid": "",
+          "offset": {
+            "x": 120,
+            "y": 180
+          },
+          "function_sid": "",
+          "parameters": [
+            {
+              "value": "#YOUR_BUSINESS_PLACE_ID#",
+              "key": "PlaceId"
+            }
+          ],
+          "url": ""
+        }
+      },
+      {
+        "name": "open",
+        "type": "say-play",
+        "transitions": [
+          {
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "alice",
+          "offset": {
+            "x": 20,
+            "y": 700
+          },
+          "loop": 1,
+          "say": "The business is open",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "closed",
+        "type": "say-play",
+        "transitions": [
+          {
+            "event": "audioComplete"
+          }
+        ],
+        "properties": {
+          "voice": "alice",
+          "offset": {
+            "x": 490,
+            "y": 760
+          },
+          "loop": 1,
+          "say": "The business is closed",
+          "language": "en-US"
+        }
+      },
+      {
+        "name": "split-open",
+        "type": "split-based-on",
+        "transitions": [
+          {
+            "next": "closed",
+            "event": "noMatch"
+          },
+          {
+            "next": "closed",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to open",
+                "arguments": [
+                  "{{widgets.check-open.parsed.open.open_now}}"
+                ],
+                "type": "equal_to",
+                "value": "false"
+              }
+            ]
+          },
+          {
+            "next": "open",
+            "event": "match",
+            "conditions": [
+              {
+                "friendly_name": "If value equal_to open",
+                "arguments": [
+                  "{{widgets.check-open.parsed.open.open_now}}"
+                ],
+                "type": "equal_to",
+                "value": "true"
+              }
+            ]
+          }
+        ],
+        "properties": {
+          "input": "{{widgets.check-open.parsed.open.open_now}}",
+          "offset": {
+            "x": 150,
+            "y": 410
+          }
+        }
+      }
+    ],
+    "initial_state": "Trigger",
+    "flags": {
+      "allow_concurrent_calls": true
+    }
+  }
