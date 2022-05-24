@@ -51,8 +51,7 @@
               "value": "#YOUR_BUSINESS_PLACE_ID#",
               "key": "PlaceId"
             }
-          ],
-          "url": ""
+          ]
         }
       },
       {
@@ -66,8 +65,8 @@
         "properties": {
           "voice": "alice",
           "offset": {
-            "x": 20,
-            "y": 700
+            "x": 460,
+            "y": 750
           },
           "loop": 1,
           "say": "The business is open",
@@ -85,8 +84,8 @@
         "properties": {
           "voice": "alice",
           "offset": {
-            "x": 490,
-            "y": 760
+            "x": -50,
+            "y": 780
           },
           "loop": 1,
           "say": "The business is closed",
