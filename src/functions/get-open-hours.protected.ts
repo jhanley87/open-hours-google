@@ -39,9 +39,9 @@ export const handler: ServerlessFunctionSignature<MyContext, MyEvent> =
         });
       }
 
-      const isOpen = place.data?.result?.opening_hours;
+      const openHours = place.data?.result?.opening_hours;
 
-      callback(null, { open: isOpen });
+      callback(null, { open: openHours });
     } catch (error) {
       console.error("Error executing function", error);
       callback("Error executing funciton", undefined);
